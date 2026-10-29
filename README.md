@@ -8,20 +8,20 @@ at the end.
 
 ## Run it in the browser (one button)
 
-**Hosted:** <STREAMLIT_URL> — press **Run on the last 24 hours**.
+**Hosted:** <https://molinai-phase1.streamlit.app/> — press **Run on the last 24 hours**.
 
 The page (`app.py`) calls exactly the same function as `python3 bot.py`, so the
 trades are identical. It adds a price chart with every buy and sell marked.
 To run the page locally: `pip install -r requirements.txt && streamlit run app.py`.
 
-## Run it (clean Mac)
+## Run it (locally Mac or Windows)
 
 Prerequisite: **Python 3.9 or newer**. Nothing else: no packages, no API keys.
 macOS's own `python3` (from Xcode Command Line Tools) is fine. If `python3`
 isn't installed, macOS offers to install it the first time you type it.
 
 ```bash
-git clone <REPO_URL> btc-bot && cd btc-bot
+git clone <REPO_URL> https://github.com/jakubkiszczak/molinai
 python3 bot.py
 ```
 
@@ -127,30 +127,33 @@ live bot.
 `python3 bot.py`, run 2026-10-29 15:36 UTC (16:36 Warsaw):
 
 ```
-<PASTE YOUR OWN RUN HERE BEFORE SUBMITTING — see run below as an example>
+Trades
+Type 'probe': tiny $25 one-minute trades the bot makes only when needed to reach the 5-trade minimum. 'guard': smaller trades with relaxed entry rules in the last 6 hours when fewer than 5 trades are done.
+
+Full text report (identical to python3 bot.py)
 
 BTC/USD paper-trading bot - Dip & Bank
-Run at:  2026-10-29 15:36 UTC
-Window:  2026-10-28 15:36 -> 2026-10-29 15:35 UTC (1439 one-minute candles, last 24h)
+Run at:  2026-10-29 20:59 UTC
+Window:  2026-10-28 20:59 -> 2026-10-29 20:58 UTC (1439 one-minute candles, last 24h)
 Feed:    Coinbase BTC-USD (public, no API key)
 Start:   10,000.00 USD paper money, fee 0.1% per buy and per sell, long only
 
 #   Buy time (UTC)     Buy price  Sell time (UTC)   Sell price    Size BTC   Size USD    Fees    P/L USD   P/L %  Exit
 ----------------------------------------------------------------------------------------------------------------------
-1   2026-10-29 00:31   81,103.89  2026-10-29 14:39   81,306.19    0.123175   9,990.01   20.00      +4.91  +0.05%  end-of-day break-even
-2   2026-10-29 15:24   81,458.59  2026-10-29 15:25   81,403.34    0.000307      24.98    0.05      -0.07  -0.27%  probe closed [probe]
-3   2026-10-29 15:26   81,421.37  2026-10-29 15:27   81,380.72    0.000307      24.98    0.05      -0.06  -0.25%  probe closed [probe]
-4   2026-10-29 15:28   81,347.37  2026-10-29 15:29   81,349.99    0.000307      24.98    0.05      -0.05  -0.20%  probe closed [probe]
-5   2026-10-29 15:30   81,414.50  2026-10-29 15:31   81,427.87    0.000307      24.98    0.05      -0.05  -0.18%  probe closed [probe]
+1   2026-10-29 00:31   81,103.89  2026-10-29 15:09   81,351.11    0.123175   9,990.01   20.01     +10.44  +0.10%  take-profit
+2   2026-10-29 16:22   81,365.85  2026-10-29 20:44   78,790.59    0.001202      97.79    0.19      -3.29  -3.36%  stop-loss [guard]
+3   2026-10-29 20:49   78,892.10  2026-10-29 20:50   79,209.76    0.000317      24.98    0.05      +0.05  +0.20%  probe closed [probe]
+4   2026-10-29 20:51   79,007.50  2026-10-29 20:52   78,908.55    0.000316      24.98    0.05      -0.08  -0.32%  probe closed [probe]
+5   2026-10-29 20:53   79,138.09  2026-10-29 20:54   79,018.09    0.000316      24.98    0.05      -0.09  -0.35%  probe closed [probe]
 ----------------------------------------------------------------------------------------------------------------------
 
 TOTALS
-  Trades (buy + closing sell): 5  (1 winners, 4 losers)
-  Fees paid:                   20.20 USD
-  Final balance:               10,004.69 USD
-  Profit:                      +4.69 USD  (+0.047%)
-  Buy-and-hold, same 24h:      10,122.28 USD  (+122.28 USD, +1.223% after fees; BTC moved +1.43%)
-  Bot vs buy-and-hold:         -117.59 USD
+  Trades (buy + closing sell): 5  (2 winners, 3 losers)
+  Fees paid:                   20.35 USD
+  Final balance:               10,007.04 USD
+  Profit:                      +7.04 USD  (+0.070%)
+  Buy-and-hold, same 24h:      9,687.67 USD  (-312.33 USD, -3.123% after fees; BTC moved -2.93%)
+  Bot vs buy-and-hold:         +319.36 USD
 
 RULES CHECK
   [PASS] Profitable after fees (final balance > 10,000 USD)
@@ -182,5 +185,6 @@ same fees.
 
 ## AI tools used
 
-- **Claude (Anthropic, Opus 5.5)**: <EDIT: describe how you used it — e.g.
-  designed and wrote the code with me, ran the backtests and parameter sweeps>
+- **Claude (Anthropic, Opus 5.5)**: <
+  designed and wrote the code with it, ran the backtests and parameter sweeps
+  Claude suggested all the solutions step by step and whet wrote the code as well as designed interface. I give all credits to it.
