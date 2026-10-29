@@ -1,3 +1,5 @@
+<img src="assets/logo.svg" alt="Jakub Kiszczak for Molin AI, Phase 1 task" width="292">
+
 # BTC/USD paper-trading bot — "Dip & Bank"
 
 Replays the last 24 hours of 1-minute BTC/USD candles and paper-trades them

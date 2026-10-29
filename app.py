@@ -9,6 +9,7 @@ trades on this page and in the terminal are identical for the same minute.
 import io
 from contextlib import redirect_stdout
 from datetime import datetime, timezone
+from pathlib import Path
 
 import altair as alt
 import pandas as pd
@@ -26,6 +27,8 @@ def utc(t):
     return datetime.fromtimestamp(t, tz=timezone.utc)
 
 
+LOGO = Path(__file__).parent / "assets" / "logo.svg"
+st.image(str(LOGO), width=292)
 st.title("BTC/USD paper-trading bot: Dip & Bank")
 st.markdown(
     "Replays the **last 24 hours** of 1-minute BTC/USD prices and paper-trades them with "
