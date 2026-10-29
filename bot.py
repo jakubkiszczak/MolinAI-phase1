@@ -34,26 +34,31 @@ def window_bounds(now: int):
     return window_start - WARMUP_MIN * 60, window_start, window_end
 
 
-def main() -> int:
-    now = int(time.time())
-    fetch_start, window_start, window_end = window_bounds(now)
+def run_latest(now: int = None, log=print):
+    """Fetch the last 24h and trade it. Shared by this CLI and the web app (app.py).
 
+    Returns (result, candles, first_index, source, now, strategy_name).
+    Raises FetchError if no price feed works.
+    """
+    now = int(time.time()) if now is None else now
+    fetch_start, window_start, window_end = window_bounds(now)
+    candles, source = fetch_candles(fetch_start, window_end, log=log)
+    first = next((k for k, c in enumerate(candles) if c.t >= window_start), None)
+    if first is None:
+        raise FetchError("not enough history returned by %s" % source)
+    strategy = DipAndBank(Params()).prepare(candles)
+    result = run(candles, first, len(candles) - 1, strategy)
+    return result, candles, first, source, now, strategy.name
+
+
+def main() -> int:
     print("Fetching 1-minute BTC/USD candles (24h window + 6h indicator warm-up)...")
     try:
-        candles, source = fetch_candles(fetch_start, window_end)
+        result, _, _, source, now, name = run_latest()
     except FetchError as e:
         print("ERROR: could not download prices.\n%s" % e, file=sys.stderr)
         return 2
-
-    first = next((k for k, c in enumerate(candles) if c.t >= window_start), None)
-    if first is None:
-        print("ERROR: not enough history returned by %s." % source, file=sys.stderr)
-        return 2
-    last = len(candles) - 1
-
-    strategy = DipAndBank(Params()).prepare(candles)
-    result = run(candles, first, last, strategy)
-    print_report(result, source, now, strategy.name)
+    print_report(result, source, now, name)
     return 0
 
 

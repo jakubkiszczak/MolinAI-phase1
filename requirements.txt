@@ -1,0 +1,2 @@
+# Only needed for the web page (app.py). bot.py and backtest.py use the standard library only.
+streamlit>=1.50

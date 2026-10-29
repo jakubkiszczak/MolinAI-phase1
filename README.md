@@ -4,6 +4,14 @@ Replays the last 24 hours of 1-minute BTC/USD candles and paper-trades them
 with 10,000 USD, 0.1% fees per side, long only, no look-ahead, and always flat
 at the end.
 
+## Run it in the browser (one button)
+
+**Hosted:** <STREAMLIT_URL> — press **Run on the last 24 hours**.
+
+The page (`app.py`) calls exactly the same function as `python3 bot.py`, so the
+trades are identical. It adds a price chart with every buy and sell marked.
+To run the page locally: `pip install -r requirements.txt && streamlit run app.py`.
+
 ## Run it (clean Mac)
 
 Prerequisite: **Python 3.9 or newer**. Nothing else: no packages, no API keys.
@@ -152,6 +160,7 @@ RULES CHECK
 
 ```
 bot.py              one-command entry point (the latest 24h)
+app.py              one-button web page (Streamlit), same code path as bot.py
 backtest.py         same bot on many past 24h windows (robustness)
 btcbot/data.py      public candle feeds with fallbacks
 btcbot/engine.py    accounting: fees, long-only, forced close at window end
